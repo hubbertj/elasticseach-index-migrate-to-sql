@@ -1,0 +1,39 @@
+version: '3.3'
+
+services:
+  elasticsearch-dev:
+    image: elasticsearch:7.14.2
+    restart: always
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+    networks:
+      - elasticsearch_dev_net
+
+  postgres-dev:
+    image: postgres:13.1
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - APP_DB_USER=usac
+      - APP_DB_PASS=usac
+      - APP_DB_NAME=usac
+    volumes:
+      - db_data:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+    networks:
+      - elasticsearch_dev_net
+
+networks:
+  elasticsearch_dev_net:
+
+volumes:
+  data01:
+    driver: local
+  db_data: {}
