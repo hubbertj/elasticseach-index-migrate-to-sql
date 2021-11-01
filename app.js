@@ -1,5 +1,5 @@
 const { elasticsearch } = require('elasticsearch');
-const { ConnectionWrapper } = require('./lib/dbConnection');
+const { DbConnectionWrapper } = require('./lib/dbConnection');
 const fs = require('fs');
 // const elasticSearchClient = new elasticsearch.Client({
 //     hosts: ['https://username:password@host:port']
@@ -24,7 +24,7 @@ const main = () => {
         return -1;
     }
     const { db } = settings;
-    connection = new ConnectionWrapper(db.dialect, db);
+    connection = new DbConnectionWrapper(db.dialect, db);
     try {
         const message = connection.test();
         console.log(message);
