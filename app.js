@@ -1,15 +1,37 @@
 const { elasticsearch } = require('elasticsearch');
-const { Client } = require('pg');
+const { ConnectionWrapper } = require('./lib/dbConnection');
+const fs = require('fs');
+// const elasticSearchClient = new elasticsearch.Client({
+//     hosts: ['https://username:password@host:port']
+// });
 
-const pgClient = new Client()
-const elasticSearchClient = new elasticsearch.Client({
-    hosts: ['https://username:password@host:port']
-});
+const SettingsDir = './settings';
+
 
 /**
  * main script function
  */
 const main = () => {
+    let settings;
+    let connection;
+    try {
+        settings = JSON.parse(fs.readFileSync(`${SettingsDir}/settings.json`));
+        console.log(settings);
+    } catch (err) {
+        console.log(err);
+    }
+    if(!'db' in settings && !settings.db){
+        return -1;
+    }
+    const { db } = settings;
+    connection = new ConnectionWrapper(db.dialect, db);
+    try {
+        const message = connection.test();
+        console.log(message);
+    } catch (err) {
+        console.log(err);
+    }
+
     // read indexs 
 
     // loop indexs and call converters | mappers | injectors
