@@ -1,40 +1,55 @@
-const { elasticsearch } = require('elasticsearch');
 const { DbConnectionWrapper } = require('./lib/dbConnection');
+const { IndexConnectionWrapper } = require('./lib/indexConnection');
 const fs = require('fs');
-// const elasticSearchClient = new elasticsearch.Client({
-//     hosts: ['https://username:password@host:port']
-// });
-
 const SettingsDir = './settings';
 
-
 /**
- * main script function
+ * Gets script's settings;
+ * @returns  
  */
-const main = () => {
+const getSettings = () => {
     let settings;
-    let connection;
     try {
         settings = JSON.parse(fs.readFileSync(`${SettingsDir}/settings.json`));
         console.log(settings);
     } catch (err) {
         console.log(err);
     }
-    if(!'db' in settings && !settings.db){
+    return settings;
+}
+
+/**
+ * main script function
+ */
+const main = () => {
+    const settings = getSettings();
+    const { db, index } = settings;
+    let dbConnection;
+    let indexConnection;
+
+    if(!db || !index){
         return -1;
     }
-    const { db } = settings;
-    connection = new DbConnectionWrapper(db.dialect, db);
+
+    // create db conection client;
+    dbConnection = new DbConnectionWrapper(db.dialect, {...db });
     try {
-        const message = connection.test();
+        const message = dbConnection.test();
         console.log(message);
     } catch (err) {
         console.log(err);
     }
 
-    // read indexs 
+    // create index connection client;
+    indexConnection = new IndexConnectionWrapper({});
+    try {
+        const message = indexConnection.test();
+        console.log(message);
+    } catch (err) {
+        console.log(err);
+    }
 
-    // loop indexs and call converters | mappers | injectors
+    // loop indexs and call converters | mappers | injectors and insert if needed;
 
 }
 
