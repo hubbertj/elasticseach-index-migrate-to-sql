@@ -86,6 +86,15 @@ const main = async () => {
                         const record = await dbConnection.getById(id, table_pk);
                         if (record.rowCount == 0) {
                             console.log(`${id} not found in ${dbConnection.getCurrentTable()} attempting to map and insert.`);
+                            let data = {};
+                            data[table_pk] = id;
+                            for (const source in fields) {
+                                data[fields[source].maps] = document[source];
+                            }
+                            const insertRecord = await dbConnection.insert(data);
+                            if(insertRecord.rowCount > 0){
+                                console.log('record inserted.');
+                            }
                         }
 
                     } catch (error) {
