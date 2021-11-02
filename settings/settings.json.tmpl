@@ -1,21 +1,44 @@
 {
     "db": {
-        "username": "postgres",
-        "password": "postgres",
-        "database": "local-test",
-        "host": "127.0.0.1",
-        "post": 5432,
+        "user": "jerum.hubbert",
+        "password": "#####",
+        "database": "form555dev",
+        "host": "nc-dev-edb-4320.usacdev.loc",
+        "port": 5444,
         "dialect": "postgre"
     },
     "index": {
         "type": "elasticsearch",
-        "username": "elk",
-        "password": "root",
-        "host": "127.0.0.1",
-        "post": 9300
+        "host": "li-dev-es-4100.usacdev.loc",
+        "log": "trace",
+        "apiVersion": "5.6",
+        "port": 9200
     },
-    "mapper": {
-        "index_name": {
+    "mapper": [
+        {
+            "indexName": "li497-dev",
+            "table": "table_name",
+            "fields": {
+                "field_1": {
+                    "column_name": "uuid",
+                    "type": "string",
+                    "active": "true"
+                },
+                "field_2": {
+                    "column_name": "data",
+                    "type": "json",
+                    "active": "true"
+                },
+                "field_3": {
+                    "column_name": "createOn",
+                    "type": "date",
+                    "active": "true"
+                }
+            },
+            "active": "true"
+        },
+        {
+            "indexName": "li555-dev",
             "table": "table_name",
             "fields": {
                 "field_1": {
@@ -36,5 +59,5 @@
             },
             "active": "true"
         }
-    }
+    ]
 }

@@ -11,6 +11,7 @@ const getSettings = () => {
     let settings;
     try {
         settings = JSON.parse(fs.readFileSync(`${SettingsDir}/settings.json`));
+        console.log('settings --------');
         console.log(settings);
     } catch (err) {
         console.log(err);
@@ -21,9 +22,9 @@ const getSettings = () => {
 /**
  * main script function
  */
-const main = () => {
+const main = async () => {
     const settings = getSettings();
-    const { db, index } = settings;
+    const { db, index, mapper } = settings;
     let dbConnection;
     let indexConnection;
 
@@ -33,24 +34,35 @@ const main = () => {
 
     // create db conection client;
     dbConnection = new DbConnectionWrapper(db.dialect, {...db });
-    try {
-        const message = dbConnection.test();
-        console.log(message);
-    } catch (err) {
-        console.log(err);
-    }
 
     // create index connection client;
-    indexConnection = new IndexConnectionWrapper({});
+    indexConnection = new IndexConnectionWrapper(index.type, {...index});
+
     try {
-        const message = indexConnection.test();
-        console.log(message);
+        const dbMessage = await dbConnection.test();
+        console.log(dbMessage);
+        const idxMessage = await indexConnection.test();
+        console.log(idxMessage);
     } catch (err) {
         console.log(err);
     }
 
     // loop indexs and call converters | mappers | injectors and insert if needed;
+    if(mapper && mapper.length > 0){
+        mapper.forEach(mapping => {
 
+            if('active' in mapping && !mapping.active){
+                return;
+            }
+            
+            console.log(mapping);
+
+
+        });
+    }
+
+
+    dbConnection.close();
 }
 
 main();
