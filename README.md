@@ -14,6 +14,7 @@ From root of project
 # Usage
 
 - copy settings/setting.json.tmpl >> settings/setting.json
+``` cp settings/setting.json.tmpl settings/setting.json ```
 - edit the settings.json for your database and elasticsearch connection
 - edit mapping indexes -> db tables.
 - Run script 

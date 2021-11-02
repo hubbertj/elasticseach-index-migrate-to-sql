@@ -1,63 +1,54 @@
 {
+    "scroll": "10s",
     "db": {
-        "user": "jerum.hubbert",
-        "password": "#####",
+        "user": "#######",
+        "password": "#######",
         "database": "form555dev",
         "host": "nc-dev-edb-4320.usacdev.loc",
+        "schema": "form555",
         "port": 5444,
         "dialect": "postgre"
     },
     "index": {
         "type": "elasticsearch",
         "host": "li-dev-es-4100.usacdev.loc",
-        "log": "trace",
         "apiVersion": "5.6",
         "port": 9200
     },
-    "mapper": [
+    "mappers": [
         {
-            "indexName": "li497-dev",
-            "table": "table_name",
+            "index_name": "li497-dev",
+            "table_name": "form497index",
+            "index_pk": "_id",
+            "table_pk": "indexid",
             "fields": {
-                "field_1": {
-                    "column_name": "uuid",
-                    "type": "string",
-                    "active": "true"
+                "_type": {
+                    "maps": "type",
+                    "type": "string"
                 },
-                "field_2": {
-                    "column_name": "data",
-                    "type": "json",
-                    "active": "true"
-                },
-                "field_3": {
-                    "column_name": "createOn",
-                    "type": "date",
-                    "active": "true"
+                "_source": {
+                    "maps": "index",
+                    "type": "json"
                 }
             },
-            "active": "true"
+            "active": false
         },
         {
-            "indexName": "li555-dev",
-            "table": "table_name",
+            "index_name": "li555-dev",
+            "table_name": "form555index",
+            "index_pk": "_id",
+            "table_pk": "indexid",
             "fields": {
-                "field_1": {
-                    "column_name": "uuid",
-                    "type": "string",
-                    "active": "true"
+                "_type": {
+                    "maps": "type",
+                    "type": "string"
                 },
-                "field_2": {
-                    "column_name": "data",
-                    "type": "json",
-                    "active": "true"
-                },
-                "field_3": {
-                    "column_name": "createOn",
-                    "type": "date",
-                    "active": "true"
+                "_source": {
+                    "maps": "index",
+                    "type": "json"
                 }
             },
-            "active": "true"
+            "active": true
         }
     ]
 }
