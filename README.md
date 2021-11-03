@@ -1,9 +1,8 @@
-# elasticseach-index-migrate-to-sql
-Migrates a elasticseach index to sql | relational database.
-
+# Elasticsearch-to-postgres
+Migrates a elasticsearch index to sql | relational database.
 
 # Local Testing
-### Deploying on service: elk search & postgre
+### Deploying on service: elk search & postgres
 From root of project
 ``` docker-compose -f docker/docker-compose.yml up -d ```
 
@@ -20,7 +19,7 @@ From root of project
 - Run script 
 ``` npm start ```
 
-# arguments
+# Arguments
 
 # Production 
 

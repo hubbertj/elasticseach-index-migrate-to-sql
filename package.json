@@ -1,5 +1,5 @@
 {
-  "name": "elasticseach-index-migrate-to-sql",
+  "name": "elasticsearch-to-postgres",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
